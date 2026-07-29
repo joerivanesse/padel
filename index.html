@@ -17,6 +17,9 @@
     --cyan:#00c7d4;
     --lime:#c4ff4d;
     --amber:#ffb400;
+    --flat-red:#e74c3c;
+    --flat-orange:#e67e22;
+    --flat-green:#2ecc71;
     --paper:#f6f3fb;
     --card:#ffffff;
     --ink:#1c1030;
@@ -66,18 +69,18 @@
     overflow:hidden;
   }
   .hero .wrap{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:16px;
     position:relative;
     z-index:2;
   }
+  .hero-wrap{padding-right:0;}
   .hero-art{
-    width:110px;height:110px;
-    align-self:center;
-    flex-shrink:0;
+    position:absolute;
+    top:-6px;
+    right:0;
+    width:74px;height:74px;
+    opacity:.85;
   }
+  .hero-text{max-width:640px;}
   .eyebrow{
     font-family:'Montserrat',sans-serif;
     text-transform:uppercase;
@@ -89,6 +92,7 @@
     display:flex;
     align-items:center;
     gap:7px;
+    padding-right:80px;
   }
   .eyebrow::before{
     content:"";
@@ -100,16 +104,10 @@
   h1.title{
     font-size:clamp(24px,7vw,40px);
     line-height:1.08;
-    margin:0 0 10px;
+    margin:0 0 16px;
     letter-spacing:-.01em;
   }
   h1.title span{color:var(--lime);}
-  .hero-text p{
-    margin:0;
-    font-size:13.5px;
-    opacity:.88;
-    font-weight:500;
-  }
   .hero::after{
     content:"";
     position:absolute;
@@ -117,6 +115,29 @@
     width:260px;height:260px;
     border:3px dashed rgba(255,255,255,.12);
     border-radius:50%;
+  }
+
+  .hero-letter{
+    font-size:13.5px;
+    line-height:1.65;
+    color:rgba(255,255,255,.88);
+    font-weight:500;
+  }
+  .hero-letter p{margin:0 0 13px;}
+  .hero-letter p:last-child{margin-bottom:0;}
+  .hero-salutation{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:16px;
+    color:var(--lime);
+    margin-bottom:13px !important;
+  }
+  .hero-letter strong{color:var(--lime);}
+  .hero-closer{
+    font-weight:700;
+    color:var(--lime);
+    padding-top:12px;
+    border-top:1.5px dashed rgba(255,255,255,.22);
   }
 
   .wrap{
@@ -271,9 +292,9 @@
   .choice:active{transform:scale(.94);}
   .choice .balls{display:flex;gap:2px;height:14px;align-items:center;justify-content:center;}
   .choice .balls svg{width:12px;height:12px;}
-  .choice[data-value="0"].selected{background:var(--magenta);color:#fff;border-color:var(--magenta);}
-  .choice[data-value="1"].selected{background:var(--amber);color:var(--ink);border-color:var(--amber);}
-  .choice[data-value="2"].selected{background:var(--purple);color:#fff;border-color:var(--purple);}
+  .choice[data-value="0"].selected{background:var(--flat-red);color:#fff;border-color:var(--flat-red);}
+  .choice[data-value="1"].selected{background:var(--flat-orange);color:#fff;border-color:var(--flat-orange);}
+  .choice[data-value="2"].selected{background:var(--flat-green);color:#fff;border-color:var(--flat-green);}
   @keyframes popIn{
     0%{transform:scale(.8);}
     55%{transform:scale(1.22) rotate(-5deg);}
@@ -368,9 +389,9 @@
     color:#fff;
     flex-shrink:0;
   }
-  .status-tag.d2{background:var(--purple);}
-  .status-tag.d1{background:var(--amber);color:var(--ink);}
-  .status-tag.d0{background:var(--magenta);}
+  .status-tag.d2{background:var(--flat-green);}
+  .status-tag.d1{background:var(--flat-orange);color:#fff;}
+  .status-tag.d0{background:var(--flat-red);}
 
   .empty-state{
     text-align:center;
@@ -437,9 +458,9 @@
 
   .legend .item{display:flex;align-items:center;gap:6px;}
   .legend .swatch{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
-  .legend .swatch.d2{background:var(--purple);}
-  .legend .swatch.d1{background:var(--amber);}
-  .legend .swatch.d0{background:var(--magenta);}
+  .legend .swatch.d2{background:var(--flat-green);}
+  .legend .swatch.d1{background:var(--flat-orange);}
+  .legend .swatch.d0{background:var(--flat-red);}
 
   .refresh-row{
     display:flex;
@@ -453,9 +474,9 @@
   @media(min-width:640px){
     .top-strip{padding:9px 24px;font-size:12px;}
     .hero{padding:44px 24px 60px;}
-    .hero .wrap{flex-direction:row;align-items:center;justify-content:space-between;}
-    .hero-art{width:170px;height:170px;align-self:auto;}
-    .hero-text{max-width:520px;}
+    .hero-art{width:110px;height:110px;top:-10px;}
+    .hero-text{max-width:640px;}
+    .eyebrow{padding-right:120px;}
     .wrap{padding:0 24px;}
     .card{padding:26px 26px 28px;margin-top:-30px;border-radius:18px;}
     .card + .card{margin-top:22px;}
@@ -472,12 +493,7 @@
 </div>
 
 <div class="hero">
-  <div class="wrap">
-    <div class="hero-text">
-      <p class="eyebrow">AA Drink KNLTB Competitie</p>
-      <h1 class="title">Najaar Padel <span>2026</span></h1>
-      <p>Vul jouw beschikbaarheid in. Zodra iedereen klaar is, zie je het volledige teamoverzicht.</p>
-    </div>
+  <div class="wrap hero-wrap">
     <div class="hero-art">
       <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
         <circle cx="100" cy="100" r="92" fill="rgba(255,255,255,0.06)"/>
@@ -492,6 +508,18 @@
         <circle cx="150" cy="150" r="14" fill="#c4ff4d"/>
         <path d="M108 118 Q130 100 148 138" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="4 5" opacity=".55"/>
       </svg>
+    </div>
+    <div class="hero-text">
+      <p class="eyebrow">AA Drink KNLTB Competitie</p>
+      <h1 class="title">Najaar Padel <span>2026</span></h1>
+      <div class="hero-letter">
+        <p class="hero-salutation">Lieve padelkoning(in),</p>
+        <p>Vorig jaar waagden we met een fanatieke groep strijders een dappere poging om de najaarscompetitie te veroveren. Het resultaat? We eindigden roemloos als allerlaatste. Maar eerlijk is eerlijk: aan gezelligheid, teamspirit en legendarische derde helften heeft het absoluut niet gelegen. Sterker nog, die waren kampioenswaardig.</p>
+        <p>En dit jaar? Dit jaar pakken we het anders aan.</p>
+        <p>Met twee kersverse aanwinsten in de selectie zijn de verwachtingen torenhoog. De missie is duidelijk: <strong>GOUD</strong>. Voor minder doen we het niet. Oké&hellip; misschien maken we een uitzondering voor een goed gevuld borrelplankje en een heerlijk speciaalbiertje.</p>
+        <p>Dus trek je padelschoenen aan, warm je backhand op en schrijf je in. Laten we samen weer een seizoen vol sportieve hoogtepunten, mooie rally's, hilarische missers en gezellige borrels beleven.</p>
+        <p class="hero-closer">En onthoud: de bal is rond, het glas is doorzichtig en taart vóór de wedstrijd is nog steeds een heel slecht idee. 🍻🎾</p>
+      </div>
     </div>
   </div>
 </div>
@@ -660,8 +688,8 @@ function isComplete(avail){
   return DATES.every(d => avail[d.id] === '0' || avail[d.id] === '1' || avail[d.id] === '2');
 }
 function statusLabel(v){
-  if(v==='2') return 'Kan — 2 wedstrijden';
-  if(v==='1') return 'Kan — 1 wedstrijd';
+  if(v==='2') return 'Kan — 2 potjes';
+  if(v==='1') return 'Kan — 1 potje';
   if(v==='0') return 'Kan niet';
   return 'Nog niet ingevuld';
 }
@@ -702,11 +730,11 @@ function renderDateRows(avail){
           </button>
           <button type="button" class="choice ${val==='1'?'selected':''}" data-value="1">
             <span class="balls">${ballSvg()}</span>
-            1 wedstrijd
+            1 potje
           </button>
           <button type="button" class="choice ${val==='2'?'selected':''}" data-value="2">
             <span class="balls">${ballSvg()}${ballSvg()}</span>
-            2 wedstrijden
+            2 potjes
           </button>
         </div>
       </div>
@@ -874,7 +902,7 @@ async function renderOverview(){
         const v = allAvail[p][d.id];
         if(v === '1' || v === '2'){ canCount++; total += parseInt(v); }
         const tagClass = v === '2' ? 'd2' : (v === '1' ? 'd1' : 'd0');
-        const tagText = v === '2' ? '2x' : (v === '1' ? '1x' : 'kan niet');
+        const tagText = v === '2' ? '2 potjes' : (v === '1' ? '1 potje' : 'kan niet');
         rows += `
           <div class="player-row">
             <div class="avatar" style="background:${avatarColor(p)};">${initials(p)}</div>
@@ -889,7 +917,7 @@ async function renderOverview(){
               <div class="date-card-title">${d.name}</div>
               <div class="date-card-time">${d.time}</div>
             </div>
-            <div class="stat-pill">${canCount}/${completed.length} kunnen · ${total}x</div>
+            <div class="stat-pill">${canCount} strijders · ${total} potjes</div>
           </div>
           ${rows}
         </div>`;
@@ -897,8 +925,8 @@ async function renderOverview(){
     html += '</div>';
 
     html += `<div class="legend">
-      <div class="item"><span class="swatch d2"></span> Kan, 2 wedstrijden</div>
-      <div class="item"><span class="swatch d1"></span> Kan, 1 wedstrijd</div>
+      <div class="item"><span class="swatch d2"></span> Kan, 2 potjes</div>
+      <div class="item"><span class="swatch d1"></span> Kan, 1 potje</div>
       <div class="item"><span class="swatch d0"></span> Kan niet</div>
     </div>`;
   }
