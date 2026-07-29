@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AA Drink KNLTB Competitie Najaar Padel 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<style>
+  :root{
+    --purple:#3d0f5a;
+    --purple-2:#5a1f82;
+    --purple-deep:#26073b;
+    --magenta:#e90052;
+    --cyan:#00c7d4;
+    --lime:#c4ff4d;
+    --amber:#ffb400;
+    --paper:#f6f3fb;
+    --card:#ffffff;
+    --ink:#1c1030;
+    --ink-soft:#6a6079;
+    --line:#e6e0f2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    padding:0 0 50px;
+  }
+  h1,h2,h3,.headline{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+  }
+
+  /* ===== mobile-first base ===== */
+  .top-strip{
+    background:var(--purple-deep);
+    color:#fff;
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:8px 16px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+  }
+  .top-strip .pill{
+    background:var(--magenta);
+    color:#fff;
+    border-radius:20px;
+    padding:2px 9px;
+    font-size:9.5px;
+  }
+
+  .hero{
+    background:linear-gradient(135deg,var(--purple-deep) 0%,var(--purple) 55%,var(--purple-2) 100%);
+    color:#fff;
+    padding:30px 16px 46px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:16px;
+    position:relative;
+    z-index:2;
+  }
+  .hero-art{
+    width:110px;height:110px;
+    align-self:center;
+    flex-shrink:0;
+  }
+  .eyebrow{
+    font-family:'Montserrat',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:11px;
+    font-weight:700;
+    color:var(--lime);
+    margin:0 0 8px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:18px;height:3px;
+    background:var(--lime);
+    border-radius:2px;
+    display:inline-block;
+  }
+  h1.title{
+    font-size:clamp(24px,7vw,40px);
+    line-height:1.08;
+    margin:0 0 10px;
+    letter-spacing:-.01em;
+  }
+  h1.title span{color:var(--lime);}
+  .hero-text p{
+    margin:0;
+    font-size:13.5px;
+    opacity:.88;
+    font-weight:500;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    left:-70px; bottom:-100px;
+    width:260px;height:260px;
+    border:3px dashed rgba(255,255,255,.12);
+    border-radius:50%;
+  }
+
+  .wrap{
+    max-width:800px;
+    margin:0 auto;
+    padding:0 16px;
+  }
+
+  .card{
+    background:var(--card);
+    border-radius:16px;
+    padding:20px 18px 22px;
+    margin-top:-26px;
+    box-shadow:0 14px 34px rgba(61,15,90,.10);
+    position:relative;
+    z-index:3;
+    border:1px solid var(--line);
+  }
+  .card + .card{margin-top:18px;}
+
+  .card-head{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:4px;
+  }
+  .card-icon{
+    width:32px;height:32px;
+    border-radius:9px;
+    background:var(--purple);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .section-title{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:15px;
+    text-transform:uppercase;
+    letter-spacing:.02em;
+    color:var(--purple);
+    margin:0;
+  }
+  .section-sub{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:6px 0 16px;
+    line-height:1.5;
+  }
+
+  label.field-label{
+    display:block;
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--purple);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    margin-bottom:7px;
+  }
+  select{
+    width:100%;
+    padding:13px 14px;
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    font-weight:600;
+    color:var(--ink);
+    background:#fff;
+    -webkit-appearance:none;
+    appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%233d0f5a' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+  }
+  select:focus{outline:none;border-color:var(--magenta);}
+
+  .btn{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    letter-spacing:.02em;
+    text-transform:uppercase;
+    font-size:11.5px;
+    background:var(--magenta);
+    color:#fff;
+    border:none;
+    border-radius:999px;
+    padding:10px 16px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .btn:active{background:#c8003f;}
+  .btn.ghost{
+    background:none;
+    color:var(--purple);
+    border:1.5px solid var(--line);
+  }
+
+  .net-divider{
+    border:none;
+    border-top:2px dashed var(--line);
+    margin:20px 0;
+  }
+
+  /* fixture-style date rows */
+  .date-row{
+    display:flex;
+    gap:12px;
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .date-row:last-child{border-bottom:none;}
+  .day-badge{
+    flex-shrink:0;
+    width:46px;height:46px;
+    border-radius:11px;
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    font-family:'Montserrat',sans-serif;
+  }
+  .day-badge .num{font-size:15px;font-weight:800;color:var(--purple);line-height:1;}
+  .day-badge .mon{font-size:8.5px;font-weight:700;color:var(--magenta);text-transform:uppercase;letter-spacing:.05em;}
+  .date-info{flex:1;min-width:0;}
+  .date-name{font-weight:700;font-size:13.5px;color:var(--ink);}
+  .date-time{font-size:11.5px;color:var(--ink-soft);margin-top:1px;}
+
+  /* fun tap-choice selector */
+  .choice-group{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:6px;
+    margin-top:10px;
+  }
+  .choice{
+    border:1.5px solid var(--line);
+    border-radius:11px;
+    background:#fff;
+    padding:9px 4px 8px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:3px;
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    cursor:pointer;
+    transition:transform .1s ease, background .15s ease, border-color .15s ease, color .15s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .choice:active{transform:scale(.94);}
+  .choice .balls{display:flex;gap:2px;height:14px;align-items:center;justify-content:center;}
+  .choice .balls svg{width:12px;height:12px;}
+  .choice[data-value="0"].selected{background:var(--magenta);color:#fff;border-color:var(--magenta);}
+  .choice[data-value="1"].selected{background:var(--amber);color:var(--ink);border-color:var(--amber);}
+  .choice[data-value="2"].selected{background:var(--purple);color:#fff;border-color:var(--purple);}
+  @keyframes popIn{
+    0%{transform:scale(.8);}
+    55%{transform:scale(1.22) rotate(-5deg);}
+    100%{transform:scale(1) rotate(0);}
+  }
+  .choice.pop{animation:popIn .38s cubic-bezier(.34,1.56,.64,1);}
+
+  .save-note{
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:14px;
+    min-height:16px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+  .save-note.show{color:var(--purple);}
+  .save-note.show .check{
+    animation:popIn .4s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  /* waiting-on chips */
+  .waiting-wrap{margin-top:6px;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
+  .chip{
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    border-radius:999px;
+    padding:6px 12px;
+    font-size:12px;
+    font-weight:600;
+    color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px;
+  }
+  .chip .dotsmall{width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0;}
+
+  /* overview date cards */
+  .overview-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+  .date-card{
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    padding:14px 14px 12px;
+    background:var(--paper);
+  }
+  .date-card-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-bottom:10px;
+  }
+  .date-card-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:13.5px;color:var(--purple);}
+  .date-card-time{font-size:11px;color:var(--ink-soft);font-weight:500;}
+  .stat-pill{
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:999px;
+    padding:4px 10px;
+    font-size:11px;
+    font-weight:700;
+    color:var(--purple);
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+  .player-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:6px 0;
+  }
+  .avatar{
+    width:26px;height:26px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:9.5px;
+    flex-shrink:0;
+  }
+  .player-name{flex:1;font-size:13px;font-weight:600;color:var(--ink);}
+  .status-tag{
+    font-size:10.5px;
+    font-weight:700;
+    padding:3px 9px;
+    border-radius:999px;
+    color:#fff;
+    flex-shrink:0;
+  }
+  .status-tag.d2{background:var(--purple);}
+  .status-tag.d1{background:var(--amber);color:var(--ink);}
+  .status-tag.d0{background:var(--magenta);}
+
+  .empty-state{
+    text-align:center;
+    padding:20px 10px;
+    color:var(--ink-soft);
+    font-size:13px;
+  }
+  .empty-state .big-ball{margin:0 auto 10px;width:44px;height:44px;}
+
+  .legend{
+    display:flex;flex-wrap:wrap;gap:12px;
+    margin-top:18px;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    font-weight:600;
+  }
+  .legend .item{display:flex;align-items:center;gap:6px;}
+  .legend .swatch{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
+  .legend .swatch.d2{background:var(--purple);}
+  .legend .swatch.d1{background:var(--amber);}
+  .legend .swatch.d0{background:var(--magenta);}
+
+  .refresh-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:16px;
+    gap:10px;
+  }
+
+  /* ===== tablet / desktop enhancements ===== */
+  @media(min-width:640px){
+    .top-strip{padding:9px 24px;font-size:12px;}
+    .hero{padding:44px 24px 60px;}
+    .hero .wrap{flex-direction:row;align-items:center;justify-content:space-between;}
+    .hero-art{width:170px;height:170px;align-self:auto;}
+    .hero-text{max-width:520px;}
+    .wrap{padding:0 24px;}
+    .card{padding:26px 26px 28px;margin-top:-30px;border-radius:18px;}
+    .card + .card{margin-top:22px;}
+    .choice-group{max-width:340px;}
+    .overview-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div class="top-strip">
+  <span>🎾 Team Padel</span>
+  <span class="pill">Najaar 2026</span>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <p class="eyebrow">AA Drink KNLTB Competitie</p>
+      <h1 class="title">Najaar Padel <span>2026</span></h1>
+      <p>Vul jouw beschikbaarheid in. Zodra iedereen klaar is, zie je het volledige teamoverzicht.</p>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="92" fill="rgba(255,255,255,0.06)"/>
+        <g transform="translate(38,26) rotate(-18 62 78)">
+          <ellipse cx="62" cy="62" rx="46" ry="52" fill="none" stroke="#c4ff4d" stroke-width="6"/>
+          <line x1="30" y1="30" x2="94" y2="94" stroke="#ffffff" stroke-width="1.5" opacity=".35"/>
+          <line x1="94" y1="30" x2="30" y2="94" stroke="#ffffff" stroke-width="1.5" opacity=".35"/>
+          <line x1="62" y1="10" x2="62" y2="114" stroke="#ffffff" stroke-width="1.5" opacity=".35"/>
+          <line x1="14" y1="62" x2="110" y2="62" stroke="#ffffff" stroke-width="1.5" opacity=".35"/>
+          <rect x="56" y="112" width="12" height="46" rx="6" fill="#e90052"/>
+        </g>
+        <circle cx="150" cy="150" r="14" fill="#c4ff4d"/>
+        <path d="M108 118 Q130 100 148 138" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="4 5" opacity=".55"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#c4ff4d" stroke-width="2"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#c4ff4d" stroke-width="2"/></svg>
+      </div>
+      <p class="section-title">Wie ben jij?</p>
+    </div>
+    <p class="section-sub">Kies je naam uit de teamlijst.</p>
+    <div>
+      <label class="field-label">Speler</label>
+      <select id="playerSelect"></select>
+    </div>
+  </div>
+
+  <div class="card" id="availCard" style="display:none;">
+    <div class="card-head">
+      <div class="card-icon">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke="#c4ff4d" stroke-width="2"/><rect x="13" y="4" width="7" height="7" rx="1.5" stroke="#c4ff4d" stroke-width="2"/><rect x="4" y="13" width="7" height="7" rx="1.5" stroke="#c4ff4d" stroke-width="2"/><rect x="13" y="13" width="7" height="7" rx="1.5" stroke="#c4ff4d" stroke-width="2"/></svg>
+      </div>
+      <p class="section-title">Jouw beschikbaarheid</p>
+    </div>
+    <p class="section-sub" id="forWhom"></p>
+    <div id="dateRows"></div>
+    <div class="save-note" id="saveNote"></div>
+  </div>
+
+  <hr class="net-divider">
+
+  <div class="card">
+    <div class="refresh-row">
+      <div>
+        <div class="card-head" style="margin-bottom:0;">
+          <div class="card-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12h4l3-8 4 16 3-8h4" stroke="#c4ff4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p class="section-title">Teamoverzicht</p>
+        </div>
+        <p class="section-sub" style="margin-bottom:0;">Zichtbaar zodra een speler alle 5 data heeft ingevuld. Werkt live bij.</p>
+      </div>
+      <button class="btn ghost" id="refreshBtn" type="button">Ververs</button>
+    </div>
+    <div id="overviewWrap"></div>
+  </div>
+
+</div>
+
+<script>
+/* ============================================================
+   FIREBASE CONFIG — vul dit in met je eigen Firebase-project
+   1. Ga naar https://console.firebase.google.com en maak een project
+   2. Voeg een Web App toe -> kopieer de config hieronder
+   3. Ga naar "Realtime Database" -> maak een database aan
+   4. Zet de rules open voor lezen/schrijven (zie toelichting in chat)
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyA3a-0UCZr3a4OJWqAaBOXwL68JGKcMo6Q",
+  authDomain: "najaar-2026.firebaseapp.com",
+  databaseURL: "https://najaar-2026-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "najaar-2026",
+  storageBucket: "najaar-2026.firebasestorage.app",
+  messagingSenderId: "121928210200",
+  appId: "1:121928210200:web:bde095198d1f7f29beb06d"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+const DATES = [
+  {id:'d1', name:'Zondag 13 september', time:'14:00 – 18:00', num:'13', mon:'sep'},
+  {id:'d2', name:'Zondag 20 september', time:'14:00 – 18:00', num:'20', mon:'sep'},
+  {id:'d3', name:'Zondag 27 september', time:'14:00 – 18:00', num:'27', mon:'sep'},
+  {id:'d4', name:'Zondag 4 oktober',    time:'14:00 – 18:00', num:'04', mon:'okt'},
+  {id:'d5', name:'Zondag 11 oktober',   time:'14:00 – 18:00', num:'11', mon:'okt'},
+];
+const PLAYERS = ['Tessa','Marit','Ilse','Rianne','Ivo','Tim','Rick','Sjan','Joeri'];
+const AVATAR_COLORS = ['#3d0f5a','#e90052','#00c7d4','#5a1f82','#ffb400','#8c4fe9','#1fae64','#d6336c','#2c5f8a'];
+
+let players = PLAYERS;
+let currentPlayer = null;
+
+function avatarColor(name){
+  const idx = PLAYERS.indexOf(name);
+  return AVATAR_COLORS[idx % AVATAR_COLORS.length];
+}
+function initials(name){ return name.slice(0,2).toUpperCase(); }
+
+function ballSvg(){
+  return '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="currentColor"/><path d="M6 6c3 3 3 9 0 12M18 6c-3 3-3 9 0 12" stroke="rgba(255,255,255,.55)" stroke-width="1.4" fill="none"/></svg>';
+}
+function crossSvg(){
+  return '<svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>';
+}
+
+async function fetchAvailability(name){
+  try{
+    const snap = await db.ref('avail/' + name).once('value');
+    return snap.exists() ? snap.val() : {};
+  }catch(e){ console.error('firebase read failed', e); return {}; }
+}
+async function pushAvailability(name, avail){
+  try{ await db.ref('avail/' + name).set(avail); }
+  catch(e){ console.error('firebase write failed', e); }
+}
+
+function isComplete(avail){
+  return DATES.every(d => avail[d.id] === '0' || avail[d.id] === '1' || avail[d.id] === '2');
+}
+function statusLabel(v){
+  if(v==='2') return 'Kan — 2 wedstrijden';
+  if(v==='1') return 'Kan — 1 wedstrijd';
+  if(v==='0') return 'Kan niet';
+  return 'Nog niet ingevuld';
+}
+
+function renderPlayerSelect(){
+  const sel = document.getElementById('playerSelect');
+  sel.innerHTML = '<option value="">— kies je naam —</option>';
+  players.forEach(p=>{
+    const opt = document.createElement('option');
+    opt.value = p; opt.textContent = p;
+    sel.appendChild(opt);
+  });
+}
+
+async function loadAvailability(name){
+  return await fetchAvailability(name);
+}
+
+function renderDateRows(avail){
+  const wrap = document.getElementById('dateRows');
+  wrap.innerHTML = '';
+  DATES.forEach(d=>{
+    const val = avail[d.id] || '';
+    const row = document.createElement('div');
+    row.className = 'date-row';
+    row.innerHTML = `
+      <div class="day-badge">
+        <div class="num">${d.num}</div>
+        <div class="mon">${d.mon}</div>
+      </div>
+      <div class="date-info">
+        <div class="date-name">${d.name}</div>
+        <div class="date-time">${d.time}</div>
+        <div class="choice-group" data-date="${d.id}">
+          <button type="button" class="choice ${val==='0'?'selected':''}" data-value="0">
+            <span class="balls">${crossSvg()}</span>
+            Kan niet
+          </button>
+          <button type="button" class="choice ${val==='1'?'selected':''}" data-value="1">
+            <span class="balls">${ballSvg()}</span>
+            1 wedstrijd
+          </button>
+          <button type="button" class="choice ${val==='2'?'selected':''}" data-value="2">
+            <span class="balls">${ballSvg()}${ballSvg()}</span>
+            2 wedstrijden
+          </button>
+        </div>
+      </div>
+    `;
+    wrap.appendChild(row);
+  });
+
+  wrap.querySelectorAll('.choice-group').forEach(group=>{
+    group.querySelectorAll('.choice').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        group.querySelectorAll('.choice').forEach(b=>b.classList.remove('selected'));
+        btn.classList.add('selected');
+        btn.classList.remove('pop');
+        void btn.offsetWidth;
+        btn.classList.add('pop');
+        saveCurrentAvailability();
+      });
+    });
+  });
+}
+
+async function saveCurrentAvailability(){
+  if(!currentPlayer) return;
+  const avail = {};
+  document.querySelectorAll('.choice-group').forEach(group=>{
+    const selected = group.querySelector('.choice.selected');
+    avail[group.dataset.date] = selected ? selected.dataset.value : '';
+  });
+  await pushAvailability(currentPlayer, avail);
+  const note = document.getElementById('saveNote');
+  note.innerHTML = '<span class="check">✓</span> Opgeslagen';
+  note.classList.remove('show');
+  void note.offsetWidth;
+  note.classList.add('show');
+  setTimeout(()=>{ note.classList.remove('show'); note.innerHTML=''; }, 1800);
+  renderOverview();
+}
+
+async function selectPlayer(name){
+  currentPlayer = name;
+  if(!name){
+    document.getElementById('availCard').style.display = 'none';
+    return;
+  }
+  document.getElementById('availCard').style.display = 'block';
+  document.getElementById('forWhom').textContent = 'Ingevuld door: ' + name;
+  const avail = await loadAvailability(name);
+  renderDateRows(avail);
+}
+
+async function renderOverview(){
+  const wrap = document.getElementById('overviewWrap');
+  const allAvail = {};
+  for(const p of players){
+    allAvail[p] = await loadAvailability(p);
+  }
+  const completed = players.filter(p => isComplete(allAvail[p]));
+  const waiting = players.filter(p => !isComplete(allAvail[p]));
+
+  let html = '';
+
+  if(completed.length === 0){
+    html += `
+      <div class="empty-state">
+        <div class="big-ball" style="color:#3d0f5a;">${ballSvg()}</div>
+        Nog niemand heeft alle 5 data volledig ingevuld.<br>Zodra de eerste speler klaar is, verschijnt hier het overzicht.
+      </div>`;
+  } else {
+    html += '<div class="overview-grid">';
+    DATES.forEach(d=>{
+      let canCount = 0, total = 0;
+      let rows = '';
+      completed.forEach(p=>{
+        const v = allAvail[p][d.id];
+        if(v === '1' || v === '2'){ canCount++; total += parseInt(v); }
+        const tagClass = v === '2' ? 'd2' : (v === '1' ? 'd1' : 'd0');
+        const tagText = v === '2' ? '2x' : (v === '1' ? '1x' : 'kan niet');
+        rows += `
+          <div class="player-row">
+            <div class="avatar" style="background:${avatarColor(p)};">${initials(p)}</div>
+            <div class="player-name">${p}</div>
+            <div class="status-tag ${tagClass}">${tagText}</div>
+          </div>`;
+      });
+      html += `
+        <div class="date-card">
+          <div class="date-card-head">
+            <div>
+              <div class="date-card-title">${d.name}</div>
+              <div class="date-card-time">${d.time}</div>
+            </div>
+            <div class="stat-pill">${canCount}/${completed.length} kunnen · ${total}x</div>
+          </div>
+          ${rows}
+        </div>`;
+    });
+    html += '</div>';
+
+    html += `<div class="legend">
+      <div class="item"><span class="swatch d2"></span> Kan, 2 wedstrijden</div>
+      <div class="item"><span class="swatch d1"></span> Kan, 1 wedstrijd</div>
+      <div class="item"><span class="swatch d0"></span> Kan niet</div>
+    </div>`;
+  }
+
+  if(waiting.length > 0){
+    html += `
+      <div class="waiting-wrap">
+        <p class="section-sub" style="margin-bottom:0;">Nog bezig met invullen (${waiting.length}):</p>
+        <div class="chip-row">
+          ${waiting.map(p=>`<span class="chip"><span class="dotsmall"></span>${p}</span>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  wrap.innerHTML = html;
+}
+
+document.getElementById('playerSelect').addEventListener('change', (e)=>{
+  selectPlayer(e.target.value);
+});
+
+document.getElementById('refreshBtn').addEventListener('click', renderOverview);
+
+(async function init(){
+  renderPlayerSelect();
+  await renderOverview();
+})();
+
+// live updates: zodra iemand anders opslaat, ververst het overzicht automatisch
+db.ref('avail').on('value', ()=>{ renderOverview(); });
+</script>
+
+</body>
+</html>
