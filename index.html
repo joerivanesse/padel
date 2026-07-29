@@ -387,6 +387,54 @@
     color:var(--ink-soft);
     font-weight:600;
   }
+  /* PIN login */
+  .pin-boxes{
+    display:flex;
+    gap:10px;
+    max-width:260px;
+  }
+  .pin-digit{
+    width:100%;
+    aspect-ratio:1;
+    text-align:center;
+    font-size:22px;
+    font-weight:800;
+    font-family:'Montserrat',sans-serif;
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    color:var(--purple);
+    background:#fff;
+    padding:0;
+  }
+  .pin-digit:focus{outline:none;border-color:var(--magenta);}
+  .pin-boxes.shake{animation:shake .4s ease;}
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    20%{transform:translateX(-8px);}
+    40%{transform:translateX(7px);}
+    60%{transform:translateX(-5px);}
+    80%{transform:translateX(4px);}
+  }
+  .pin-error{
+    color:var(--magenta);
+    font-size:12.5px;
+    font-weight:700;
+    margin:10px 0 0;
+  }
+  .logged-in-bar{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:10px 12px;
+  }
+  .logged-in-bar .avatar{width:32px;height:32px;font-size:11px;}
+  .logged-name{flex:1;font-weight:700;font-size:14px;color:var(--ink);}
+  .logged-in-bar .btn{padding:8px 14px;font-size:10.5px;}
+  .pop-in{animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
+
   .legend .item{display:flex;align-items:center;gap:6px;}
   .legend .swatch{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
   .legend .swatch.d2{background:var(--purple);}
@@ -450,17 +498,38 @@
 
 <div class="wrap">
 
-  <div class="card">
+  <div class="card" id="loginCard">
     <div class="card-head">
       <div class="card-icon">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#c4ff4d" stroke-width="2"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#c4ff4d" stroke-width="2"/></svg>
       </div>
       <p class="section-title">Wie ben jij?</p>
     </div>
-    <p class="section-sub">Kies je naam uit de teamlijst.</p>
-    <div>
+
+    <div id="loginStepSelect">
+      <p class="section-sub">Kies je naam uit de teamlijst.</p>
       <label class="field-label">Speler</label>
       <select id="playerSelect"></select>
+    </div>
+
+    <div id="loginStepPin" style="display:none;">
+      <p class="section-sub">Voer de pincode van <strong id="pinPlayerName"></strong> in.</p>
+      <div class="pin-boxes" id="pinBoxes">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-digit" data-idx="0" autocomplete="off">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-digit" data-idx="1" autocomplete="off">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-digit" data-idx="2" autocomplete="off">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-digit" data-idx="3" autocomplete="off">
+      </div>
+      <p class="pin-error" id="pinError" style="display:none;">Onjuiste pincode — probeer opnieuw.</p>
+      <button class="btn ghost" id="pinCancelBtn" type="button" style="margin-top:12px;">← Andere naam</button>
+    </div>
+
+    <div id="loginStepDone" style="display:none;">
+      <div class="logged-in-bar">
+        <div class="avatar" id="loggedAvatar"></div>
+        <div class="logged-name" id="loggedName"></div>
+        <button class="btn ghost" id="logoutBtn" type="button">Wissel</button>
+      </div>
     </div>
   </div>
 
@@ -525,6 +594,18 @@ const DATES = [
 ];
 const PLAYERS = ['Tessa','Marit','Ilse','Rianne','Ivo','Tim','Rick','Sjan','Joeri'];
 const AVATAR_COLORS = ['#3d0f5a','#e90052','#00c7d4','#5a1f82','#ffb400','#8c4fe9','#1fae64','#d6336c','#2c5f8a'];
+const PINS = {
+  Tessa:  '1758',
+  Marit:  '3411',
+  Ilse:   '3641',
+  Rianne: '7876',
+  Ivo:    '8695',
+  Tim:    '7509',
+  Rick:   '2265',
+  Sjan:   '7995',
+  Joeri:  '1581',
+};
+const AUTH_KEY = 'padelNajaar2026_speler';
 
 let players = PLAYERS;
 let currentPlayer = null;
@@ -642,16 +723,89 @@ async function saveCurrentAvailability(){
   renderOverview();
 }
 
-async function selectPlayer(name){
-  currentPlayer = name;
-  if(!name){
-    document.getElementById('availCard').style.display = 'none';
-    return;
+function showStep(step){
+  document.getElementById('loginStepSelect').style.display = step === 'select' ? 'block' : 'none';
+  document.getElementById('loginStepPin').style.display = step === 'pin' ? 'block' : 'none';
+  document.getElementById('loginStepDone').style.display = step === 'done' ? 'block' : 'none';
+}
+
+function pinDigits(){
+  return Array.from(document.querySelectorAll('.pin-digit'));
+}
+function clearPinBoxes(){
+  pinDigits().forEach(d => d.value = '');
+}
+function currentPinValue(){
+  return pinDigits().map(d => d.value).join('');
+}
+
+function startPinStep(name){
+  document.getElementById('pinPlayerName').textContent = name;
+  document.getElementById('pinError').style.display = 'none';
+  clearPinBoxes();
+  showStep('pin');
+  setTimeout(()=> pinDigits()[0].focus(), 50);
+}
+
+function wirePinInputs(){
+  const digits = pinDigits();
+  digits.forEach((input, idx)=>{
+    input.addEventListener('input', ()=>{
+      input.value = input.value.replace(/[^0-9]/g, '').slice(0,1);
+      if(input.value && idx < digits.length - 1){
+        digits[idx+1].focus();
+      }
+      if(digits.every(d => d.value)){
+        attemptLogin();
+      }
+    });
+    input.addEventListener('keydown', (e)=>{
+      if(e.key === 'Backspace' && !input.value && idx > 0){
+        digits[idx-1].focus();
+      }
+    });
+  });
+}
+
+function attemptLogin(){
+  const name = document.getElementById('pinPlayerName').textContent;
+  const entered = currentPinValue();
+  if(entered === PINS[name]){
+    localStorage.setItem(AUTH_KEY, name);
+    finishLogin(name);
+  } else {
+    const box = document.getElementById('pinBoxes');
+    document.getElementById('pinError').style.display = 'block';
+    box.classList.remove('shake');
+    void box.offsetWidth;
+    box.classList.add('shake');
+    clearPinBoxes();
+    pinDigits()[0].focus();
   }
+}
+
+async function finishLogin(name){
+  currentPlayer = name;
+  document.getElementById('loggedAvatar').style.background = avatarColor(name);
+  document.getElementById('loggedAvatar').textContent = initials(name);
+  document.getElementById('loggedName').textContent = 'Ingelogd als ' + name;
+  showStep('done');
+  document.getElementById('loginStepDone').firstElementChild.classList.remove('pop-in');
+  void document.getElementById('loginStepDone').offsetWidth;
+  document.getElementById('loginStepDone').firstElementChild.classList.add('pop-in');
+
   document.getElementById('availCard').style.display = 'block';
   document.getElementById('forWhom').textContent = 'Ingevuld door: ' + name;
   const avail = await loadAvailability(name);
   renderDateRows(avail);
+}
+
+function logout(){
+  localStorage.removeItem(AUTH_KEY);
+  currentPlayer = null;
+  document.getElementById('playerSelect').value = '';
+  document.getElementById('availCard').style.display = 'none';
+  showStep('select');
 }
 
 async function renderOverview(){
@@ -723,14 +877,32 @@ async function renderOverview(){
 }
 
 document.getElementById('playerSelect').addEventListener('change', (e)=>{
-  selectPlayer(e.target.value);
+  const name = e.target.value;
+  if(!name){ showStep('select'); return; }
+  startPinStep(name);
 });
+
+document.getElementById('pinCancelBtn').addEventListener('click', ()=>{
+  document.getElementById('playerSelect').value = '';
+  showStep('select');
+});
+
+document.getElementById('logoutBtn').addEventListener('click', logout);
 
 document.getElementById('refreshBtn').addEventListener('click', renderOverview);
 
 (async function init(){
   renderPlayerSelect();
+  wirePinInputs();
   await renderOverview();
+
+  const saved = localStorage.getItem(AUTH_KEY);
+  if(saved && PLAYERS.includes(saved)){
+    document.getElementById('playerSelect').value = saved;
+    await finishLogin(saved);
+  } else {
+    showStep('select');
+  }
 })();
 
 // live updates: zodra iemand anders opslaat, ververst het overzicht automatisch
