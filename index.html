@@ -381,6 +381,7 @@
     flex-shrink:0;
   }
   .player-name{flex:1;font-size:13px;font-weight:600;color:var(--ink);}
+  .player-name.muted{color:#b3aec2;}
   .status-tag{
     font-size:10.5px;
     font-weight:700;
@@ -391,7 +392,7 @@
   }
   .status-tag.d2{background:var(--flat-green);}
   .status-tag.d1{background:var(--flat-orange);color:#fff;}
-  .status-tag.d0{background:var(--flat-red);}
+  .status-tag.d0{background:#fff;border:1.5px solid var(--flat-red);color:#000;padding:1.5px 8px;}
 
   .empty-state{
     text-align:center;
@@ -460,7 +461,7 @@
   .legend .swatch{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
   .legend .swatch.d2{background:var(--flat-green);}
   .legend .swatch.d1{background:var(--flat-orange);}
-  .legend .swatch.d0{background:var(--flat-red);}
+  .legend .swatch.d0{background:#fff;border:1.5px solid var(--flat-red);}
 
   .footer{
     margin-top:30px;
@@ -666,7 +667,7 @@ const DATES = [
   {id:'d4', name:'Zondag 4 oktober',    time:'14:00 – 18:00', num:'04', mon:'okt'},
   {id:'d5', name:'Zondag 11 oktober',   time:'14:00 – 18:00', num:'11', mon:'okt'},
 ];
-const PLAYERS = ['Tessa','Marit','Ilse','Rianne','Ivo','Tim','Rick','Sjan','Joeri'];
+const PLAYERS = ['Ilse','Ivo','Joeri','Marit','Rianne','Rick','Sjan','Tessa','Tim'];
 const AVATAR_COLORS = ['#3d0f5a','#e90052','#00c7d4','#5a1f82','#ffb400','#8c4fe9','#1fae64','#d6336c','#2c5f8a'];
 const PINS = {
   Tessa:  '1758',
@@ -922,15 +923,23 @@ async function renderOverview(){
     DATES.forEach(d=>{
       let canCount = 0, total = 0;
       let rows = '';
-      completed.forEach(p=>{
+      const statusPriority = {'2':0, '1':1, '0':2};
+      const sortedForDate = [...completed].sort((a,b)=>{
+        const pa = statusPriority[allAvail[a][d.id]];
+        const pb = statusPriority[allAvail[b][d.id]];
+        if(pa !== pb) return pa - pb;
+        return a.localeCompare(b);
+      });
+      sortedForDate.forEach(p=>{
         const v = allAvail[p][d.id];
         if(v === '1' || v === '2'){ canCount++; total += parseInt(v); }
         const tagClass = v === '2' ? 'd2' : (v === '1' ? 'd1' : 'd0');
         const tagText = v === '2' ? '2 potjes' : (v === '1' ? '1 potje' : 'kan niet');
+        const nameClass = v === '0' ? 'player-name muted' : 'player-name';
         rows += `
           <div class="player-row">
             <div class="avatar" style="background:${avatarColor(p)};">${initials(p)}</div>
-            <div class="player-name">${p}</div>
+            <div class="${nameClass}">${p}</div>
             <div class="status-tag ${tagClass}">${tagText}</div>
           </div>`;
       });
