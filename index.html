@@ -140,6 +140,52 @@
     border-top:1.5px dashed rgba(255,255,255,.22);
   }
 
+  .countdown{
+    margin-top:20px;
+    background:rgba(255,255,255,.08);
+    border:1.5px solid rgba(255,255,255,.18);
+    border-radius:14px;
+    padding:14px 16px;
+  }
+  .countdown-label{
+    margin:0 0 12px;
+    font-size:12.5px;
+    color:rgba(255,255,255,.85);
+    font-weight:600;
+  }
+  .countdown-label strong{color:var(--lime);}
+  .countdown-numbers{
+    display:flex;
+    gap:10px;
+  }
+  .countdown-box{
+    flex:1;
+    background:rgba(255,255,255,.06);
+    border:1.5px solid rgba(255,255,255,.14);
+    border-radius:10px;
+    padding:10px 6px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .countdown-value{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:26px;
+    color:var(--lime);
+    line-height:1;
+  }
+  .countdown-unit{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:rgba(255,255,255,.7);
+    margin-top:4px;
+  }
+  .countdown.closed .countdown-label{color:var(--lime);}
+
   .wrap{
     max-width:800px;
     margin:0 auto;
@@ -536,6 +582,20 @@
         <p>Met twee kersverse aanwinsten in de selectie zijn de verwachtingen torenhoog. De missie is duidelijk: <strong>GOUD</strong>. Voor minder doen we het niet. Oké&hellip; misschien maken we een uitzondering voor een goed gevuld borrelplankje en een heerlijk speciaalbiertje.</p>
         <p>Dus trek je padelschoenen aan, warm je backhand op en schrijf je in. Laten we samen weer een seizoen vol sportieve hoogtepunten, mooie rally's, hilarische missers en gezellige borrels beleven.</p>
         <p class="hero-closer">En onthoud: de bal is rond, het glas is doorzichtig en taart vóór de wedstrijd is nog steeds een heel slecht idee. 🍻🎾</p>
+      </div>
+
+      <div class="countdown">
+        <p class="countdown-label">⏳ Inschrijven kan nog tot <strong>31 augustus, 19:00 uur</strong></p>
+        <div class="countdown-numbers">
+          <div class="countdown-box">
+            <span class="countdown-value" id="cdDays">–</span>
+            <span class="countdown-unit">dagen</span>
+          </div>
+          <div class="countdown-box">
+            <span class="countdown-value" id="cdHours">–</span>
+            <span class="countdown-unit">uur</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -977,6 +1037,27 @@ async function renderOverview(){
   wrap.innerHTML = html;
 }
 
+function updateCountdown(){
+  const deadline = new Date(2026, 7, 31, 19, 0, 0); // 31 augustus 2026, 19:00 lokale tijd
+  const now = new Date();
+  const diff = deadline - now;
+  const box = document.querySelector('.countdown');
+
+  if(diff <= 0){
+    box.classList.add('closed');
+    document.getElementById('cdDays').textContent = '0';
+    document.getElementById('cdHours').textContent = '0';
+    document.querySelector('.countdown-label').innerHTML = '🔒 Inschrijving is <strong>gesloten</strong>';
+    return;
+  }
+
+  const totalHours = Math.floor(diff / (1000 * 60 * 60));
+  const days = Math.floor(totalHours / 24);
+  const hours = totalHours % 24;
+  document.getElementById('cdDays').textContent = days;
+  document.getElementById('cdHours').textContent = hours;
+}
+
 document.getElementById('playerSelect').addEventListener('change', (e)=>{
   const name = e.target.value;
   if(!name){ showStep('select'); return; }
@@ -1006,6 +1087,8 @@ document.getElementById('refreshBtn').addEventListener('click', renderOverview);
   renderPlayerSelect();
   wirePinInputs();
   await renderOverview();
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
 
   const saved = localStorage.getItem(AUTH_KEY);
   if(saved && PLAYERS.includes(saved)){
