@@ -545,6 +545,28 @@
     <div class="save-note" id="saveNote"></div>
   </div>
 
+  <div class="card" id="adminCard" style="display:none;">
+    <div class="card-head">
+      <div class="card-icon" style="background:var(--magenta);">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17.5c-.5.9.1 2 1.2 2h16.2c1.1 0 1.7-1.1 1.2-2L13.7 3.9c-.6-1-2-1-2.6 0z" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <p class="section-title">Beheerder</p>
+    </div>
+    <p class="section-sub">Alleen jij ziet deze optie.</p>
+
+    <div id="adminStepInitial">
+      <button class="btn ghost" id="resetAllBtn" type="button" style="border-color:var(--magenta);color:var(--magenta);">Wis alle beschikbaarheid</button>
+    </div>
+    <div id="adminStepConfirm" style="display:none;">
+      <p class="pin-error" style="display:block;">Weet je het zeker? Dit wist de antwoorden van alle 9 spelers en kan niet ongedaan gemaakt worden.</p>
+      <div style="display:flex; gap:10px; margin-top:10px;">
+        <button class="btn" id="resetConfirmBtn" type="button" style="background:var(--magenta);">Ja, wis alles</button>
+        <button class="btn ghost" id="resetCancelBtn" type="button">Annuleren</button>
+      </div>
+    </div>
+    <div class="save-note" id="adminNote"></div>
+  </div>
+
   <hr class="net-divider">
 
   <div class="card">
@@ -798,6 +820,8 @@ async function finishLogin(name){
   document.getElementById('forWhom').textContent = 'Ingevuld door: ' + name;
   const avail = await loadAvailability(name);
   renderDateRows(avail);
+
+  document.getElementById('adminCard').style.display = (name === 'Joeri') ? 'block' : 'none';
 }
 
 function logout(){
@@ -805,7 +829,23 @@ function logout(){
   currentPlayer = null;
   document.getElementById('playerSelect').value = '';
   document.getElementById('availCard').style.display = 'none';
+  document.getElementById('adminCard').style.display = 'none';
   showStep('select');
+}
+
+async function resetAllAvailability(){
+  await db.ref('avail').remove();
+  document.getElementById('adminStepConfirm').style.display = 'none';
+  document.getElementById('adminStepInitial').style.display = 'block';
+  const note = document.getElementById('adminNote');
+  note.textContent = 'Alles gewist ✓';
+  note.classList.remove('show');
+  void note.offsetWidth;
+  note.classList.add('show');
+  setTimeout(()=>{ note.classList.remove('show'); note.textContent=''; }, 2200);
+  if(currentPlayer){
+    renderDateRows({});
+  }
 }
 
 async function renderOverview(){
@@ -888,6 +928,16 @@ document.getElementById('pinCancelBtn').addEventListener('click', ()=>{
 });
 
 document.getElementById('logoutBtn').addEventListener('click', logout);
+
+document.getElementById('resetAllBtn').addEventListener('click', ()=>{
+  document.getElementById('adminStepInitial').style.display = 'none';
+  document.getElementById('adminStepConfirm').style.display = 'block';
+});
+document.getElementById('resetCancelBtn').addEventListener('click', ()=>{
+  document.getElementById('adminStepConfirm').style.display = 'none';
+  document.getElementById('adminStepInitial').style.display = 'block';
+});
+document.getElementById('resetConfirmBtn').addEventListener('click', resetAllAvailability);
 
 document.getElementById('refreshBtn').addEventListener('click', renderOverview);
 
