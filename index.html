@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AA Drink KNLTB Competitie Najaar Padel 2026</title>
+<title>Wedstrijdschema — Veenendaal 1 — Najaar 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <style>
   :root{
     --purple:#3d0f5a;
@@ -39,7 +37,6 @@
     font-weight:800;
   }
 
-  /* ===== mobile-first base ===== */
   .top-strip{
     background:var(--purple-deep);
     color:#fff;
@@ -68,15 +65,10 @@
     position:relative;
     overflow:hidden;
   }
-  .hero .wrap{
-    position:relative;
-    z-index:2;
-  }
-  .hero-wrap{padding-right:0;}
+  .hero .wrap{position:relative;z-index:2;}
   .hero-art{
     position:absolute;
-    top:-6px;
-    right:0;
+    top:-6px;right:0;
     width:74px;height:74px;
     opacity:.85;
   }
@@ -89,9 +81,7 @@
     font-weight:700;
     color:var(--lime);
     margin:0 0 8px;
-    display:flex;
-    align-items:center;
-    gap:7px;
+    display:flex;align-items:center;gap:7px;
     padding-right:80px;
   }
   .eyebrow::before{
@@ -102,12 +92,19 @@
     display:inline-block;
   }
   h1.title{
-    font-size:clamp(24px,7vw,40px);
+    font-size:clamp(24px,7vw,38px);
     line-height:1.08;
-    margin:0 0 16px;
+    margin:0 0 10px;
     letter-spacing:-.01em;
   }
   h1.title span{color:var(--lime);}
+  .hero-sub{
+    font-size:13.5px;
+    line-height:1.6;
+    color:rgba(255,255,255,.85);
+    font-weight:500;
+    max-width:520px;
+  }
   .hero::after{
     content:"";
     position:absolute;
@@ -116,75 +113,6 @@
     border:3px dashed rgba(255,255,255,.12);
     border-radius:50%;
   }
-
-  .hero-letter{
-    font-size:13.5px;
-    line-height:1.65;
-    color:rgba(255,255,255,.88);
-    font-weight:500;
-  }
-  .hero-letter p{margin:0 0 13px;}
-  .hero-letter p:last-child{margin-bottom:0;}
-  .hero-salutation{
-    font-family:'Montserrat',sans-serif;
-    font-weight:800;
-    font-size:16px;
-    color:var(--lime);
-    margin-bottom:13px !important;
-  }
-  .hero-letter strong{color:var(--lime);}
-  .hero-closer{
-    font-weight:700;
-    color:var(--lime);
-    padding-top:12px;
-    border-top:1.5px dashed rgba(255,255,255,.22);
-  }
-
-  .countdown{
-    margin-top:20px;
-    background:rgba(255,255,255,.08);
-    border:1.5px solid rgba(255,255,255,.18);
-    border-radius:14px;
-    padding:14px 16px;
-  }
-  .countdown-label{
-    margin:0 0 12px;
-    font-size:12.5px;
-    color:rgba(255,255,255,.85);
-    font-weight:600;
-  }
-  .countdown-label strong{color:var(--lime);}
-  .countdown-numbers{
-    display:flex;
-    gap:10px;
-  }
-  .countdown-box{
-    flex:1;
-    background:rgba(255,255,255,.06);
-    border:1.5px solid rgba(255,255,255,.14);
-    border-radius:10px;
-    padding:10px 6px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-  .countdown-value{
-    font-family:'Montserrat',sans-serif;
-    font-weight:800;
-    font-size:26px;
-    color:var(--lime);
-    line-height:1;
-  }
-  .countdown-unit{
-    font-family:'Montserrat',sans-serif;
-    font-weight:700;
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    color:rgba(255,255,255,.7);
-    margin-top:4px;
-  }
-  .countdown.closed .countdown-label{color:var(--lime);}
 
   .wrap{
     max-width:800px;
@@ -204,97 +132,23 @@
   }
   .card + .card{margin-top:18px;}
 
-  .card-head{
+  /* ===== match cards ===== */
+  .match-card{
+    background:var(--card);
+    border-radius:16px;
+    padding:18px 18px 20px;
+    box-shadow:0 14px 34px rgba(61,15,90,.10);
+    border:1px solid var(--line);
+  }
+  .match-card + .match-card{margin-top:18px;}
+  .match-card:first-child{margin-top:-26px;position:relative;z-index:3;}
+
+  .match-top{
     display:flex;
     align-items:center;
-    gap:9px;
-    margin-bottom:4px;
-  }
-  .card-icon{
-    width:32px;height:32px;
-    border-radius:9px;
-    background:var(--purple);
-    display:flex;align-items:center;justify-content:center;
-    flex-shrink:0;
-  }
-  .section-title{
-    font-family:'Montserrat',sans-serif;
-    font-weight:800;
-    font-size:15px;
-    text-transform:uppercase;
-    letter-spacing:.02em;
-    color:var(--purple);
-    margin:0;
-  }
-  .section-sub{
-    font-size:12.5px;
-    color:var(--ink-soft);
-    margin:6px 0 16px;
-    line-height:1.5;
-  }
-
-  label.field-label{
-    display:block;
-    font-size:11.5px;
-    font-weight:700;
-    color:var(--purple);
-    text-transform:uppercase;
-    letter-spacing:.04em;
-    margin-bottom:7px;
-  }
-  select{
-    width:100%;
-    padding:13px 14px;
-    border:1.5px solid var(--line);
-    border-radius:10px;
-    font-family:'Inter',sans-serif;
-    font-size:15px;
-    font-weight:600;
-    color:var(--ink);
-    background:#fff;
-    -webkit-appearance:none;
-    appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%233d0f5a' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;
-    background-position:right 14px center;
-  }
-  select:focus{outline:none;border-color:var(--magenta);}
-
-  .btn{
-    font-family:'Montserrat',sans-serif;
-    font-weight:700;
-    letter-spacing:.02em;
-    text-transform:uppercase;
-    font-size:11.5px;
-    background:var(--magenta);
-    color:#fff;
-    border:none;
-    border-radius:999px;
-    padding:10px 16px;
-    cursor:pointer;
-    white-space:nowrap;
-  }
-  .btn:active{background:#c8003f;}
-  .btn.ghost{
-    background:none;
-    color:var(--purple);
-    border:1.5px solid var(--line);
-  }
-
-  .net-divider{
-    border:none;
-    border-top:2px dashed var(--line);
-    margin:20px 0;
-  }
-
-  /* fixture-style date rows */
-  .date-row{
-    display:flex;
     gap:12px;
-    padding:14px 0;
-    border-bottom:1px solid var(--line);
+    margin-bottom:14px;
   }
-  .date-row:last-child{border-bottom:none;}
   .day-badge{
     flex-shrink:0;
     width:46px;height:46px;
@@ -307,109 +161,70 @@
   }
   .day-badge .num{font-size:15px;font-weight:800;color:var(--purple);line-height:1;}
   .day-badge .mon{font-size:8.5px;font-weight:700;color:var(--magenta);text-transform:uppercase;letter-spacing:.05em;}
-  .date-info{flex:1;min-width:0;}
-  .date-name{font-weight:700;font-size:13.5px;color:var(--ink);}
-  .date-time{font-size:11.5px;color:var(--ink-soft);margin-top:1px;}
-
-  /* fun tap-choice selector */
-  .choice-group{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:6px;
-    margin-top:10px;
+  .match-when{flex:1;min-width:0;}
+  .match-date{font-weight:700;font-size:13.5px;color:var(--ink);}
+  .match-time{font-size:11.5px;color:var(--ink-soft);margin-top:1px;}
+  .venue-pill{
+    flex-shrink:0;
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:10px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    padding:5px 11px;
+    border-radius:999px;
   }
-  .choice{
-    border:1.5px solid var(--line);
-    border-radius:11px;
-    background:#fff;
-    padding:9px 4px 8px;
+  .venue-pill.thuis{background:var(--lime);color:var(--purple-deep);}
+  .venue-pill.uit{background:var(--purple-deep);color:#fff;}
+
+  .matchup{
     display:flex;
-    flex-direction:column;
     align-items:center;
-    gap:3px;
+    gap:10px;
+    padding:12px 14px;
+    background:var(--paper);
+    border-radius:12px;
+    margin-bottom:16px;
+  }
+  .team-name{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:14.5px;
+    line-height:1.3;
+  }
+  .team-name.us{color:var(--purple);}
+  .team-name.them{color:var(--ink-soft);font-weight:700;}
+  .matchup .vs{
     font-family:'Montserrat',sans-serif;
     font-weight:700;
-    font-size:10.5px;
-    color:var(--ink-soft);
-    cursor:pointer;
-    transition:transform .1s ease, background .15s ease, border-color .15s ease, color .15s ease;
-    -webkit-tap-highlight-color:transparent;
+    font-size:11px;
+    color:#b3aec2;
+    flex-shrink:0;
   }
-  .choice:active{transform:scale(.94);}
-  .choice .balls{display:flex;gap:2px;height:14px;align-items:center;justify-content:center;}
-  .choice .balls svg{width:12px;height:12px;}
-  .choice[data-value="0"].selected{background:var(--flat-red);color:#fff;border-color:var(--flat-red);}
-  .choice[data-value="1"].selected{background:var(--flat-orange);color:#fff;border-color:var(--flat-orange);}
-  .choice[data-value="2"].selected{background:var(--flat-green);color:#fff;border-color:var(--flat-green);}
-  @keyframes popIn{
-    0%{transform:scale(.8);}
-    55%{transform:scale(1.22) rotate(-5deg);}
-    100%{transform:scale(1) rotate(0);}
-  }
-  .choice.pop{animation:popIn .38s cubic-bezier(.34,1.56,.64,1);}
+  .matchup-teams{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0;}
 
-  .save-note{
-    font-size:12px;
-    color:var(--ink-soft);
-    margin-top:14px;
-    min-height:16px;
-    font-weight:700;
-    display:flex;
-    align-items:center;
-    gap:5px;
-  }
-  .save-note.show{color:var(--purple);}
-  .save-note.show .check{
-    animation:popIn .4s cubic-bezier(.34,1.56,.64,1);
-  }
-
-  /* waiting-on chips */
-  .waiting-wrap{margin-top:6px;}
-  .chip-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
-  .chip{
-    background:var(--paper);
-    border:1.5px solid var(--line);
-    border-radius:999px;
-    padding:6px 12px;
-    font-size:12px;
-    font-weight:600;
-    color:var(--ink-soft);
+  .roster-label{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--purple);
+    margin:0 0 8px;
     display:flex;align-items:center;gap:6px;
   }
-  .chip .dotsmall{width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0;}
-
-  /* overview date cards */
-  .overview-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:14px;
-  }
-  .date-card{
-    border:1.5px solid var(--line);
-    border-radius:14px;
-    padding:14px 14px 12px;
-    background:var(--paper);
-  }
-  .date-card-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:8px;
-    margin-bottom:10px;
-  }
-  .date-card-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:13.5px;color:var(--purple);}
-  .date-card-time{font-size:11px;color:var(--ink-soft);font-weight:500;}
-  .stat-pill{
+  .roster-label .count-pill{
     background:#fff;
     border:1.5px solid var(--line);
     border-radius:999px;
-    padding:4px 10px;
-    font-size:11px;
+    padding:1px 8px;
+    font-size:10px;
+    color:var(--ink-soft);
     font-weight:700;
-    color:var(--purple);
-    white-space:nowrap;
-    flex-shrink:0;
+    text-transform:none;
+    letter-spacing:0;
   }
+
   .player-row{
     display:flex;
     align-items:center;
@@ -426,8 +241,9 @@
     font-size:9.5px;
     flex-shrink:0;
   }
+  .avatar.unknown{background:#d8d2e6 !important;color:var(--ink-soft);}
   .player-name{flex:1;font-size:13px;font-weight:600;color:var(--ink);}
-  .player-name.muted{color:#b3aec2;}
+  .player-name.muted{color:var(--ink-soft);font-style:italic;font-weight:600;}
   .status-tag{
     font-size:10.5px;
     font-weight:700;
@@ -435,79 +251,37 @@
     border-radius:999px;
     color:#fff;
     flex-shrink:0;
+    white-space:nowrap;
   }
   .status-tag.d2{background:var(--flat-green);}
-  .status-tag.d1{background:var(--flat-orange);color:#fff;}
-  .status-tag.d0{background:#fff;border:1.5px solid var(--flat-red);color:#000;padding:1.5px 8px;}
+  .status-tag.d1{background:var(--flat-orange);}
 
-  .empty-state{
-    text-align:center;
-    padding:20px 10px;
-    color:var(--ink-soft);
-    font-size:13px;
+  .net-divider{
+    border:none;
+    border-top:1.5px dashed var(--line);
+    margin:16px 0 14px;
   }
-  .empty-state .big-ball{margin:0 auto 10px;width:44px;height:44px;}
 
-  .legend{
-    display:flex;flex-wrap:wrap;gap:12px;
-    margin-top:18px;
-    font-size:11.5px;
-    color:var(--ink-soft);
-    font-weight:600;
-  }
-  /* PIN login */
-  .pin-boxes{
+  .opponent-row{
     display:flex;
-    gap:10px;
-    max-width:260px;
+    flex-wrap:wrap;
+    gap:8px;
   }
-  .pin-digit{
-    width:100%;
-    aspect-ratio:1;
-    text-align:center;
-    font-size:22px;
-    font-weight:800;
-    font-family:'Montserrat',sans-serif;
-    border:1.5px solid var(--line);
-    border-radius:12px;
-    color:var(--purple);
-    background:#fff;
-    padding:0;
-  }
-  .pin-digit:focus{outline:none;border-color:var(--magenta);}
-  .pin-boxes.shake{animation:shake .4s ease;}
-  @keyframes shake{
-    0%,100%{transform:translateX(0);}
-    20%{transform:translateX(-8px);}
-    40%{transform:translateX(7px);}
-    60%{transform:translateX(-5px);}
-    80%{transform:translateX(4px);}
-  }
-  .pin-error{
-    color:var(--magenta);
-    font-size:12.5px;
-    font-weight:700;
-    margin:10px 0 0;
-  }
-  .logged-in-bar{
+  .opponent-chip{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:7px;
     background:var(--paper);
     border:1.5px solid var(--line);
-    border-radius:12px;
-    padding:10px 12px;
+    border-radius:999px;
+    padding:5px 12px 5px 6px;
   }
-  .logged-in-bar .avatar{width:32px;height:32px;font-size:11px;}
-  .logged-name{flex:1;font-weight:700;font-size:14px;color:var(--ink);}
-  .logged-in-bar .btn{padding:8px 14px;font-size:10.5px;}
-  .pop-in{animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
-
-  .legend .item{display:flex;align-items:center;gap:6px;}
-  .legend .swatch{width:13px;height:13px;border-radius:50%;flex-shrink:0;}
-  .legend .swatch.d2{background:var(--flat-green);}
-  .legend .swatch.d1{background:var(--flat-orange);}
-  .legend .swatch.d0{background:#fff;border:1.5px solid var(--flat-red);}
+  .opponent-chip .avatar{background:#d8d2e6 !important;color:#8f88a0;}
+  .opponent-chip span{
+    font-size:12px;
+    font-weight:600;
+    color:#b3aec2;
+  }
 
   .footer{
     margin-top:30px;
@@ -525,26 +299,13 @@
   }
   .footer p:last-child{margin-bottom:0;}
 
-  .refresh-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    margin-bottom:16px;
-    gap:10px;
-  }
-
-  /* ===== tablet / desktop enhancements ===== */
   @media(min-width:640px){
     .top-strip{padding:9px 24px;font-size:12px;}
-    .hero{padding:44px 24px 60px;}
+    .hero{padding:44px 24px 52px;}
     .hero-art{width:110px;height:110px;top:-10px;}
-    .hero-text{max-width:640px;}
     .eyebrow{padding-right:120px;}
     .wrap{padding:0 24px;}
-    .card{padding:26px 26px 28px;margin-top:-30px;border-radius:18px;}
-    .card + .card{margin-top:22px;}
-    .choice-group{max-width:340px;}
-    .overview-grid{grid-template-columns:repeat(2,1fr);}
+    .match-card{padding:24px 24px 26px;border-radius:18px;}
   }
 </style>
 </head>
@@ -556,7 +317,7 @@
 </div>
 
 <div class="hero">
-  <div class="wrap hero-wrap">
+  <div class="wrap">
     <div class="hero-art">
       <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
         <circle cx="100" cy="100" r="92" fill="rgba(255,255,255,0.06)"/>
@@ -574,533 +335,158 @@
     </div>
     <div class="hero-text">
       <p class="eyebrow">AA Drink KNLTB Competitie</p>
-      <h1 class="title">Najaar Padel <span>2026</span></h1>
-      <div class="hero-letter">
-        <p class="hero-salutation">Lieve padelkoning(in),</p>
-        <p>Vorig jaar waagden we met een fanatieke groep strijders een dappere poging om de najaarscompetitie te veroveren. Het resultaat? We eindigden roemloos als allerlaatste. Maar eerlijk is eerlijk: aan gezelligheid, teamspirit en legendarische derde helften heeft het absoluut niet gelegen. Sterker nog, die waren kampioenswaardig.</p>
-        <p>En dit jaar? Dit jaar pakken we het anders aan.</p>
-        <p>Met twee kersverse aanwinsten in de selectie zijn de verwachtingen torenhoog. De missie is duidelijk: <strong>GOUD</strong>. Voor minder doen we het niet. Oké&hellip; misschien maken we een uitzondering voor een goed gevuld borrelplankje en een heerlijk speciaalbiertje.</p>
-        <p>Dus trek je padelschoenen aan, warm je backhand op en schrijf je in. Laten we samen weer een seizoen vol sportieve hoogtepunten, mooie rally's, hilarische missers en gezellige borrels beleven.</p>
-        <p class="hero-closer">En onthoud: de bal is rond, het glas is doorzichtig en taart vóór de wedstrijd is nog steeds een heel slecht idee. 🍻🎾</p>
-      </div>
-
-      <div class="countdown">
-        <p class="countdown-label">⏳ Inschrijven kan nog tot <strong>31 augustus, 19:00 uur</strong></p>
-        <div class="countdown-numbers">
-          <div class="countdown-box">
-            <span class="countdown-value" id="cdDays">–</span>
-            <span class="countdown-unit">dagen</span>
-          </div>
-          <div class="countdown-box">
-            <span class="countdown-value" id="cdHours">–</span>
-            <span class="countdown-unit">uur</span>
-          </div>
-        </div>
-      </div>
+      <h1 class="title">Wedstrijd<span>schema</span></h1>
+      <p class="hero-sub">Vijf speelzondagen, één missie. Hieronder per wedstrijd wie er speelt en hoeveel potjes — de tegenstander wordt later aangevuld.</p>
     </div>
   </div>
 </div>
 
-<div class="wrap">
-
-  <div class="card" id="loginCard">
-    <div class="card-head">
-      <div class="card-icon">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#c4ff4d" stroke-width="2"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#c4ff4d" stroke-width="2"/></svg>
-      </div>
-      <p class="section-title">Wie ben jij?</p>
-    </div>
-
-    <div id="loginStepSelect">
-      <p class="section-sub">Kies je naam uit de teamlijst.</p>
-      <label class="field-label">Speler</label>
-      <select id="playerSelect"></select>
-    </div>
-
-    <div id="loginStepPin" style="display:none;">
-      <p class="section-sub">Voer de pincode van <strong id="pinPlayerName"></strong> in.</p>
-      <div class="pin-boxes" id="pinBoxes">
-        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-digit" data-idx="0" autocomplete="off">
-        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-digit" data-idx="1" autocomplete="off">
-        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-digit" data-idx="2" autocomplete="off">
-        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-digit" data-idx="3" autocomplete="off">
-      </div>
-      <p class="pin-error" id="pinError" style="display:none;">Onjuiste pincode — probeer opnieuw.</p>
-      <button class="btn ghost" id="pinCancelBtn" type="button" style="margin-top:12px;">← Andere naam</button>
-    </div>
-
-    <div id="loginStepDone" style="display:none;">
-      <div class="logged-in-bar">
-        <div class="avatar" id="loggedAvatar"></div>
-        <div class="logged-name" id="loggedName"></div>
-        <button class="btn ghost" id="logoutBtn" type="button">Wissel</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="availCard" style="display:none;">
-    <div class="card-head">
-      <div class="card-icon">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke="#c4ff4d" stroke-width="2"/><rect x="13" y="4" width="7" height="7" rx="1.5" stroke="#c4ff4d" stroke-width="2"/><rect x="4" y="13" width="7" height="7" rx="1.5" stroke="#c4ff4d" stroke-width="2"/><rect x="13" y="13" width="7" height="7" rx="1.5" stroke="#c4ff4d" stroke-width="2"/></svg>
-      </div>
-      <p class="section-title">Jouw beschikbaarheid</p>
-    </div>
-    <p class="section-sub" id="forWhom"></p>
-    <div id="dateRows"></div>
-    <div class="save-note" id="saveNote"></div>
-  </div>
-
-  <div class="card" id="adminCard" style="display:none;">
-    <div class="card-head">
-      <div class="card-icon" style="background:var(--magenta);">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17.5c-.5.9.1 2 1.2 2h16.2c1.1 0 1.7-1.1 1.2-2L13.7 3.9c-.6-1-2-1-2.6 0z" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <p class="section-title">Beheerder</p>
-    </div>
-    <p class="section-sub">Alleen jij ziet deze optie.</p>
-
-    <div id="adminStepInitial">
-      <button class="btn ghost" id="resetAllBtn" type="button" style="border-color:var(--magenta);color:var(--magenta);">Wis alle beschikbaarheid</button>
-    </div>
-    <div id="adminStepConfirm" style="display:none;">
-      <p class="pin-error" style="display:block;">Weet je het zeker? Dit wist de antwoorden van alle 9 spelers en kan niet ongedaan gemaakt worden.</p>
-      <div style="display:flex; gap:10px; margin-top:10px;">
-        <button class="btn" id="resetConfirmBtn" type="button" style="background:var(--magenta);">Ja, wis alles</button>
-        <button class="btn ghost" id="resetCancelBtn" type="button">Annuleren</button>
-      </div>
-    </div>
-    <div class="save-note" id="adminNote"></div>
-  </div>
-
-  <hr class="net-divider">
-
-  <div class="card">
-    <div class="refresh-row">
-      <div>
-        <div class="card-head" style="margin-bottom:0;">
-          <div class="card-icon">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 12h4l3-8 4 16 3-8h4" stroke="#c4ff4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <p class="section-title">Teamoverzicht</p>
-        </div>
-        <p class="section-sub" style="margin-bottom:0;">Zichtbaar zodra een speler alle 5 data heeft ingevuld. Werkt live bij.</p>
-      </div>
-      <button class="btn ghost" id="refreshBtn" type="button">Ververs</button>
-    </div>
-    <div id="overviewWrap"></div>
-  </div>
-
-</div>
+<div class="wrap" id="matchWrap"></div>
 
 <footer class="footer">
   <div class="wrap footer-wrap">
-    <p>Iedere speelzondag staan er 4 wedstrijden op het programma. Daarvoor hebben we minimaal 4 en maximaal 8 strijders nodig.</p>
-    <p>Zijn er meer aanmeldingen dan plekken? Dan maken we een eerlijke verdeling, zodat iedereen gedurende het seizoen zoveel mogelijk aan spelen toekomt. Zijn er te weinig aanmeldingen? Dan is het tijd om nog wat vrienden, collega's of de kat van de buren ervan te overtuigen dat dit hét seizoen wordt waarin we eindelijk kampioen worden.</p>
-    <p>Ons uitgangspunt is simpel: liever met een grote, gezellige groep waarbij iedereen één wedstrijd speelt, dan dat een paar mensen twee keer de baan op gaan terwijl anderen langs de kant moeten toekijken. Zo blijft het voor iedereen leuk, eerlijk én gezellig. 🎾🍻</p>
+    <p>De namen bij de tegenstander zijn nog onbekend en worden zodra bekend aangevuld.</p>
+    <p>Staat je naam nog niet bij een wedstrijd waar je wél bij wilt zijn (of juist wel, terwijl je niet kan)? Laat het weten in de groep. 🎾🍻</p>
   </div>
 </footer>
 
 <script>
-/* ============================================================
-   FIREBASE CONFIG — vul dit in met je eigen Firebase-project
-   1. Ga naar https://console.firebase.google.com en maak een project
-   2. Voeg een Web App toe -> kopieer de config hieronder
-   3. Ga naar "Realtime Database" -> maak een database aan
-   4. Zet de rules open voor lezen/schrijven (zie toelichting in chat)
-   ============================================================ */
-const firebaseConfig = {
-  apiKey: "AIzaSyA3a-0UCZr3a4OJWqAaBOXwL68JGKcMo6Q",
-  authDomain: "najaar-2026.firebaseapp.com",
-  databaseURL: "https://najaar-2026-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "najaar-2026",
-  storageBucket: "najaar-2026.firebasestorage.app",
-  messagingSenderId: "121928210200",
-  appId: "1:121928210200:web:bde095198d1f7f29beb06d"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-const DATES = [
-  {id:'d1', name:'Zondag 13 september', time:'14:00 – 18:00', num:'13', mon:'sep'},
-  {id:'d2', name:'Zondag 20 september', time:'14:00 – 18:00', num:'20', mon:'sep'},
-  {id:'d3', name:'Zondag 27 september', time:'14:00 – 18:00', num:'27', mon:'sep'},
-  {id:'d4', name:'Zondag 4 oktober',    time:'14:00 – 18:00', num:'04', mon:'okt'},
-  {id:'d5', name:'Zondag 11 oktober',   time:'14:00 – 18:00', num:'11', mon:'okt'},
-];
 const PLAYERS = ['Ilse','Ivo','Joeri','Marit','Rianne','Rick','Sjan','Tessa','Tim'];
 const AVATAR_COLORS = ['#3d0f5a','#e90052','#00c7d4','#5a1f82','#ffb400','#8c4fe9','#1fae64','#d6336c','#2c5f8a'];
-const PINS = {
-  Tessa:  '1758',
-  Marit:  '3411',
-  Ilse:   '3641',
-  Rianne: '7876',
-  Ivo:    '8695',
-  Tim:    '7509',
-  Rick:   '2265',
-  Sjan:   '7995',
-  Joeri:  '1581',
-};
-const AUTH_KEY = 'padelNajaar2026_speler';
-
-let players = PLAYERS;
-let currentPlayer = null;
 
 function avatarColor(name){
   const idx = PLAYERS.indexOf(name);
-  return AVATAR_COLORS[idx % AVATAR_COLORS.length];
+  return idx === -1 ? '#d8d2e6' : AVATAR_COLORS[idx % AVATAR_COLORS.length];
 }
-function initials(name){ return name.slice(0,2).toUpperCase(); }
-
-function ballSvg(){
-  return '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="currentColor"/><path d="M6 6c3 3 3 9 0 12M18 6c-3 3-3 9 0 12" stroke="rgba(255,255,255,.55)" stroke-width="1.4" fill="none"/></svg>';
-}
-function crossSvg(){
-  return '<svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>';
+function initials(name){
+  if(name === '?') return '?';
+  return name.slice(0,2).toUpperCase();
 }
 
-async function fetchAvailability(name){
-  try{
-    const snap = await db.ref('avail/' + name).once('value');
-    return snap.exists() ? snap.val() : {};
-  }catch(e){ console.error('firebase read failed', e); return {}; }
-}
-async function pushAvailability(name, avail){
-  try{ await db.ref('avail/' + name).set(avail); }
-  catch(e){ console.error('firebase write failed', e); }
-}
+const MATCHES = [
+  {
+    num:'13', mon:'sep', date:'Zondag 13 september', time:'13:00 uur',
+    home:true, opponent:'Keltenwoud 3',
+    players:[
+      {name:'Marit', potjes:2},
+      {name:'Sjan', potjes:2},
+      {name:'Joeri', potjes:2},
+      {name:'?', potjes:2},
+    ]
+  },
+  {
+    num:'20', mon:'sep', date:'Zondag 20 september', time:'10:00 uur',
+    home:false, opponent:'The Padellers - Doorn 2',
+    players:[
+      {name:'Marit', potjes:2},
+      {name:'Rianne', potjes:2},
+      {name:'Sjan', potjes:2},
+      {name:'Joeri', potjes:2},
+    ]
+  },
+  {
+    num:'27', mon:'sep', date:'Zondag 27 september', time:'13:00 uur',
+    home:true, opponent:'Healthcity Hoenderdaal 1',
+    players:[
+      {name:'Ilse', potjes:1},
+      {name:'Marit', potjes:1},
+      {name:'Rianne', potjes:1},
+      {name:'Tessa', potjes:1},
+      {name:'Tim', potjes:1},
+      {name:'Ivo', potjes:1},
+      {name:'Rick', potjes:1},
+      {name:'Joeri', potjes:1},
+    ]
+  },
+  {
+    num:'04', mon:'okt', date:'Zondag 4 oktober', time:'13:00 uur',
+    home:true, opponent:'Barneveld 2',
+    players:[
+      {name:'Marit', potjes:2},
+      {name:'Rianne', potjes:2},
+      {name:'Sjan', potjes:2},
+      {name:'Joeri', potjes:2},
+    ]
+  },
+  {
+    num:'11', mon:'okt', date:'Zondag 11 oktober', time:'tijd volgt',
+    home:false, opponent:'Padel33 Amersfoort 2',
+    players:[
+      {name:'Ilse', potjes:1},
+      {name:'Marit', potjes:1},
+      {name:'Rianne', potjes:1},
+      {name:'Tessa', potjes:1},
+      {name:'Tim', potjes:1},
+      {name:'Sjan', potjes:1},
+      {name:'Rick', potjes:1},
+      {name:'Joeri', potjes:1},
+    ]
+  },
+];
 
-function isComplete(avail){
-  return DATES.every(d => avail[d.id] === '0' || avail[d.id] === '1' || avail[d.id] === '2');
-}
-function statusLabel(v){
-  if(v==='2') return 'Kan — 2 potjes';
-  if(v==='1') return 'Kan — 1 potje';
-  if(v==='0') return 'Kan niet';
-  return 'Nog niet ingevuld';
-}
+const US = 'Veenendaal 1';
+const OPPONENT_PLACEHOLDERS = ['Tegenstander A','Tegenstander B','Tegenstander C','Tegenstander D'];
 
-function renderPlayerSelect(){
-  const sel = document.getElementById('playerSelect');
-  sel.innerHTML = '<option value="">— kies je naam —</option>';
-  players.forEach(p=>{
-    const opt = document.createElement('option');
-    opt.value = p; opt.textContent = p;
-    sel.appendChild(opt);
-  });
-}
-
-async function loadAvailability(name){
-  return await fetchAvailability(name);
-}
-
-function renderDateRows(avail){
-  const wrap = document.getElementById('dateRows');
-  wrap.innerHTML = '';
-  DATES.forEach(d=>{
-    const val = avail[d.id] || '';
-    const row = document.createElement('div');
-    row.className = 'date-row';
-    row.innerHTML = `
-      <div class="day-badge">
-        <div class="num">${d.num}</div>
-        <div class="mon">${d.mon}</div>
-      </div>
-      <div class="date-info">
-        <div class="date-name">${d.name}</div>
-        <div class="date-time">${d.time}</div>
-        <div class="choice-group" data-date="${d.id}">
-          <button type="button" class="choice ${val==='0'?'selected':''}" data-value="0">
-            <span class="balls">${crossSvg()}</span>
-            Kan niet
-          </button>
-          <button type="button" class="choice ${val==='1'?'selected':''}" data-value="1">
-            <span class="balls">${ballSvg()}</span>
-            1 potje
-          </button>
-          <button type="button" class="choice ${val==='2'?'selected':''}" data-value="2">
-            <span class="balls">${ballSvg()}${ballSvg()}</span>
-            2 potjes
-          </button>
-        </div>
-      </div>
-    `;
-    wrap.appendChild(row);
-  });
-
-  wrap.querySelectorAll('.choice-group').forEach(group=>{
-    group.querySelectorAll('.choice').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        group.querySelectorAll('.choice').forEach(b=>b.classList.remove('selected'));
-        btn.classList.add('selected');
-        btn.classList.remove('pop');
-        void btn.offsetWidth;
-        btn.classList.add('pop');
-        saveCurrentAvailability();
-      });
-    });
-  });
-}
-
-async function saveCurrentAvailability(){
-  if(!currentPlayer) return;
-  const avail = {};
-  document.querySelectorAll('.choice-group').forEach(group=>{
-    const selected = group.querySelector('.choice.selected');
-    avail[group.dataset.date] = selected ? selected.dataset.value : '';
-  });
-  await pushAvailability(currentPlayer, avail);
-  const note = document.getElementById('saveNote');
-  note.innerHTML = '<span class="check">✓</span> Opgeslagen';
-  note.classList.remove('show');
-  void note.offsetWidth;
-  note.classList.add('show');
-  setTimeout(()=>{ note.classList.remove('show'); note.innerHTML=''; }, 1800);
-  renderOverview();
-}
-
-function showStep(step){
-  document.getElementById('loginStepSelect').style.display = step === 'select' ? 'block' : 'none';
-  document.getElementById('loginStepPin').style.display = step === 'pin' ? 'block' : 'none';
-  document.getElementById('loginStepDone').style.display = step === 'done' ? 'block' : 'none';
-}
-
-function pinDigits(){
-  return Array.from(document.querySelectorAll('.pin-digit'));
-}
-function clearPinBoxes(){
-  pinDigits().forEach(d => d.value = '');
-}
-function currentPinValue(){
-  return pinDigits().map(d => d.value).join('');
-}
-
-function startPinStep(name){
-  document.getElementById('pinPlayerName').textContent = name;
-  document.getElementById('pinError').style.display = 'none';
-  clearPinBoxes();
-  showStep('pin');
-  setTimeout(()=> pinDigits()[0].focus(), 50);
-}
-
-function wirePinInputs(){
-  const digits = pinDigits();
-  digits.forEach((input, idx)=>{
-    input.addEventListener('input', ()=>{
-      input.value = input.value.replace(/[^0-9]/g, '').slice(0,1);
-      if(input.value && idx < digits.length - 1){
-        digits[idx+1].focus();
-      }
-      if(digits.every(d => d.value)){
-        attemptLogin();
-      }
-    });
-    input.addEventListener('keydown', (e)=>{
-      if(e.key === 'Backspace' && !input.value && idx > 0){
-        digits[idx-1].focus();
-      }
-    });
-  });
-}
-
-function attemptLogin(){
-  const name = document.getElementById('pinPlayerName').textContent;
-  const entered = currentPinValue();
-  if(entered === PINS[name]){
-    localStorage.setItem(AUTH_KEY, name);
-    finishLogin(name);
-  } else {
-    const box = document.getElementById('pinBoxes');
-    document.getElementById('pinError').style.display = 'block';
-    box.classList.remove('shake');
-    void box.offsetWidth;
-    box.classList.add('shake');
-    clearPinBoxes();
-    pinDigits()[0].focus();
-  }
-}
-
-async function finishLogin(name){
-  currentPlayer = name;
-  document.getElementById('loggedAvatar').style.background = avatarColor(name);
-  document.getElementById('loggedAvatar').textContent = initials(name);
-  document.getElementById('loggedName').textContent = 'Ingelogd als ' + name;
-  showStep('done');
-  document.getElementById('loginStepDone').firstElementChild.classList.remove('pop-in');
-  void document.getElementById('loginStepDone').offsetWidth;
-  document.getElementById('loginStepDone').firstElementChild.classList.add('pop-in');
-
-  document.getElementById('availCard').style.display = 'block';
-  document.getElementById('forWhom').textContent = 'Ingevuld door: ' + name;
-  const avail = await loadAvailability(name);
-  renderDateRows(avail);
-
-  document.getElementById('adminCard').style.display = (name === 'Joeri') ? 'block' : 'none';
-}
-
-function logout(){
-  localStorage.removeItem(AUTH_KEY);
-  currentPlayer = null;
-  document.getElementById('playerSelect').value = '';
-  document.getElementById('availCard').style.display = 'none';
-  document.getElementById('adminCard').style.display = 'none';
-  showStep('select');
-}
-
-async function resetAllAvailability(){
-  await db.ref('avail').remove();
-  document.getElementById('adminStepConfirm').style.display = 'none';
-  document.getElementById('adminStepInitial').style.display = 'block';
-  const note = document.getElementById('adminNote');
-  note.textContent = 'Alles gewist ✓';
-  note.classList.remove('show');
-  void note.offsetWidth;
-  note.classList.add('show');
-  setTimeout(()=>{ note.classList.remove('show'); note.textContent=''; }, 2200);
-  if(currentPlayer){
-    renderDateRows({});
-  }
-}
-
-async function renderOverview(){
-  const wrap = document.getElementById('overviewWrap');
-  const allAvail = {};
-  for(const p of players){
-    allAvail[p] = await loadAvailability(p);
-  }
-  const completed = players.filter(p => isComplete(allAvail[p]));
-  const waiting = players.filter(p => !isComplete(allAvail[p]));
-
-  let html = '';
-
-  if(completed.length === 0){
-    html += `
-      <div class="empty-state">
-        <div class="big-ball" style="color:#3d0f5a;">${ballSvg()}</div>
-        Nog niemand heeft alle 5 data volledig ingevuld.<br>Zodra de eerste speler klaar is, verschijnt hier het overzicht.
-      </div>`;
-  } else {
-    html += '<div class="overview-grid">';
-    DATES.forEach(d=>{
-      let canCount = 0, total = 0;
-      let rows = '';
-      const statusPriority = {'2':0, '1':1, '0':2};
-      const sortedForDate = [...completed].sort((a,b)=>{
-        const pa = statusPriority[allAvail[a][d.id]];
-        const pb = statusPriority[allAvail[b][d.id]];
-        if(pa !== pb) return pa - pb;
-        return a.localeCompare(b);
-      });
-      sortedForDate.forEach(p=>{
-        const v = allAvail[p][d.id];
-        if(v === '1' || v === '2'){ canCount++; total += parseInt(v); }
-        const tagClass = v === '2' ? 'd2' : (v === '1' ? 'd1' : 'd0');
-        const tagText = v === '2' ? '2 potjes' : (v === '1' ? '1 potje' : 'kan niet');
-        const nameClass = v === '0' ? 'player-name muted' : 'player-name';
-        rows += `
-          <div class="player-row">
-            <div class="avatar" style="background:${avatarColor(p)};">${initials(p)}</div>
-            <div class="${nameClass}">${p}</div>
-            <div class="status-tag ${tagClass}">${tagText}</div>
-          </div>`;
-      });
-      html += `
-        <div class="date-card">
-          <div class="date-card-head">
-            <div>
-              <div class="date-card-title">${d.name}</div>
-              <div class="date-card-time">${d.time}</div>
-            </div>
-            <div class="stat-pill">${canCount} aanwezig</div>
-          </div>
-          ${rows}
-        </div>`;
-    });
-    html += '</div>';
-
-    html += `<div class="legend">
-      <div class="item"><span class="swatch d2"></span> Kan, 2 potjes</div>
-      <div class="item"><span class="swatch d1"></span> Kan, 1 potje</div>
-      <div class="item"><span class="swatch d0"></span> Kan niet</div>
+function playerRow(p){
+  const isUnknown = p.name === '?';
+  const avatarStyle = isUnknown ? '' : `style="background:${avatarColor(p.name)};"`;
+  const avatarClass = isUnknown ? 'avatar unknown' : 'avatar';
+  const nameClass = isUnknown ? 'player-name muted' : 'player-name';
+  const nameText = isUnknown ? 'Nog onbekend' : p.name;
+  const tagClass = p.potjes === 2 ? 'd2' : 'd1';
+  const tagText = p.potjes === 2 ? '2 potjes' : '1 potje';
+  return `
+    <div class="player-row">
+      <div class="${avatarClass}" ${avatarStyle}>${initials(p.name)}</div>
+      <div class="${nameClass}">${nameText}</div>
+      <div class="status-tag ${tagClass}">${tagText}</div>
     </div>`;
-  }
-
-  if(waiting.length > 0){
-    html += `
-      <div class="waiting-wrap">
-        <p class="section-sub" style="margin-bottom:0;">Nog bezig met invullen (${waiting.length}):</p>
-        <div class="chip-row">
-          ${waiting.map(p=>`<span class="chip"><span class="dotsmall"></span>${p}</span>`).join('')}
-        </div>
-      </div>`;
-  }
-
-  wrap.innerHTML = html;
 }
 
-function updateCountdown(){
-  const deadline = new Date(2026, 7, 31, 19, 0, 0); // 31 augustus 2026, 19:00 lokale tijd
-  const now = new Date();
-  const diff = deadline - now;
-  const box = document.querySelector('.countdown');
-
-  if(diff <= 0){
-    box.classList.add('closed');
-    document.getElementById('cdDays').textContent = '0';
-    document.getElementById('cdHours').textContent = '0';
-    document.querySelector('.countdown-label').innerHTML = '🔒 Inschrijving is <strong>gesloten</strong>';
-    return;
-  }
-
-  const totalHours = Math.floor(diff / (1000 * 60 * 60));
-  const days = Math.floor(totalHours / 24);
-  const hours = totalHours % 24;
-  document.getElementById('cdDays').textContent = days;
-  document.getElementById('cdHours').textContent = hours;
+function opponentChip(name){
+  return `
+    <div class="opponent-chip">
+      <div class="avatar">${name.slice(-1)}</div>
+      <span>${name}</span>
+    </div>`;
 }
 
-document.getElementById('playerSelect').addEventListener('change', (e)=>{
-  const name = e.target.value;
-  if(!name){ showStep('select'); return; }
-  startPinStep(name);
-});
+function matchCard(m){
+  const usTeam = `<div class="team-name us">${US}</div>`;
+  const themTeam = `<div class="team-name them">${m.opponent}</div>`;
+  const teamsBlock = m.home
+    ? `<div class="matchup-teams">${usTeam}<div class="vs">thuis tegen</div>${themTeam}</div>`
+    : `<div class="matchup-teams">${themTeam}<div class="vs">op bezoek bij</div>${usTeam}</div>`;
 
-document.getElementById('pinCancelBtn').addEventListener('click', ()=>{
-  document.getElementById('playerSelect').value = '';
-  showStep('select');
-});
+  return `
+  <div class="match-card">
+    <div class="match-top">
+      <div class="day-badge">
+        <div class="num">${m.num}</div>
+        <div class="mon">${m.mon}</div>
+      </div>
+      <div class="match-when">
+        <div class="match-date">${m.date}</div>
+        <div class="match-time">${m.time}</div>
+      </div>
+      <div class="venue-pill ${m.home ? 'thuis' : 'uit'}">${m.home ? 'Thuis' : 'Uit'}</div>
+    </div>
 
-document.getElementById('logoutBtn').addEventListener('click', logout);
+    <div class="matchup">${teamsBlock}</div>
 
-document.getElementById('resetAllBtn').addEventListener('click', ()=>{
-  document.getElementById('adminStepInitial').style.display = 'none';
-  document.getElementById('adminStepConfirm').style.display = 'block';
-});
-document.getElementById('resetCancelBtn').addEventListener('click', ()=>{
-  document.getElementById('adminStepConfirm').style.display = 'none';
-  document.getElementById('adminStepInitial').style.display = 'block';
-});
-document.getElementById('resetConfirmBtn').addEventListener('click', resetAllAvailability);
+    <p class="roster-label">Ons team <span class="count-pill">${m.players.length} spelers</span></p>
+    ${m.players.map(playerRow).join('')}
 
-document.getElementById('refreshBtn').addEventListener('click', renderOverview);
+    <hr class="net-divider">
 
-(async function init(){
-  renderPlayerSelect();
-  wirePinInputs();
-  await renderOverview();
-  updateCountdown();
-  setInterval(updateCountdown, 60000);
+    <p class="roster-label">Tegenstander</p>
+    <div class="opponent-row">
+      ${OPPONENT_PLACEHOLDERS.map(opponentChip).join('')}
+    </div>
+  </div>`;
+}
 
-  const saved = localStorage.getItem(AUTH_KEY);
-  if(saved && PLAYERS.includes(saved)){
-    document.getElementById('playerSelect').value = saved;
-    await finishLogin(saved);
-  } else {
-    showStep('select');
-  }
-})();
-
-// live updates: zodra iemand anders opslaat, ververst het overzicht automatisch
-db.ref('avail').on('value', ()=>{ renderOverview(); });
+document.getElementById('matchWrap').innerHTML = MATCHES.map(matchCard).join('');
 </script>
 
 </body>
