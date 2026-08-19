@@ -455,8 +455,8 @@ function matchCard(m){
   const usTeam = `<div class="team-name us">${US}</div>`;
   const themTeam = `<div class="team-name them">${m.opponent}</div>`;
   const teamsBlock = m.home
-    ? `<div class="matchup-teams">${usTeam}<div class="vs">thuis tegen</div>${themTeam}</div>`
-    : `<div class="matchup-teams">${themTeam}<div class="vs">op bezoek bij</div>${usTeam}</div>`;
+    ? `<div class="matchup-teams">${usTeam}<div class="vs">Versus</div>${themTeam}</div>`
+    : `<div class="matchup-teams">${themTeam}<div class="vs">Versus</div>${usTeam}</div>`;
 
   return `
   <div class="match-card">
